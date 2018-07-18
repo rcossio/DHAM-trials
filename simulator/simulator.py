@@ -1,5 +1,5 @@
 # Example run command
-# python simulator.py -s samples.dat -sp sampledprob.dat -p exactprob.dat -g freeenergy.dat
+# python simulator.py -s samples.dat -sp sampledprob.dat -p exactprob.dat -g freenergy.dat
 
 import numpy as np
 import argparse

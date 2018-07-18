@@ -1,5 +1,5 @@
 # Example run command
-# python dham.py -i umbrella-sampling.log -m -0.7 -M 0.7 -nb 70 -T 310.0 -g dham.free.dat -w dham.evals.dat -p dham.prob.dat 
+# python dham-one-vector.py -i umbrella-sampling.log -m -0.7 -M 0.7 -nb 70 -T 310.0 -it 10000 -g dham2.free.dat -p dham2.prob.dat 
 
 import numpy as np
 import argparse
@@ -11,12 +11,12 @@ import sys
 parser = argparse.ArgumentParser()
 
 parser.add_argument("-i" , dest="metadataFile"    , required=True)
-parser.add_argument("-m",  dest="Xmin"             , required=True)
-parser.add_argument("-M",  dest="Xmax"             , required=True)
+parser.add_argument("-m",  dest="Xmin"            , required=True)
+parser.add_argument("-M",  dest="Xmax"            , required=True)
 parser.add_argument("-T" , dest="temperature"     , required=True)
 parser.add_argument("-nb", dest="numberOfBins"    , required=True)
 parser.add_argument("-g" , dest="freeEnergyFile"  , required=True)
-parser.add_argument("-w" , dest="eigenvaluesFile" , required=True)
+parser.add_argument("-it" ,dest="iterations"      , required=True)
 parser.add_argument("-p",  dest="probabilityFile" , required=True)
 
 
@@ -25,10 +25,10 @@ metadataFile    = args.metadataFile
 temperature     = float(args.temperature)
 numberOfBins    = int(args.numberOfBins)
 freeEnergyFile  = open(args.freeEnergyFile,'w')
-eigenvaluesFile = open(args.eigenvaluesFile,'w')
 probabilityFile = open(args.probabilityFile,'w')
 Xmin            = float(args.Xmin)
 Xmax            = float(args.Xmax) 
+iterations      = int(args.iterations)
 
 #---------------------------------------
 #	Parameters
@@ -132,16 +132,16 @@ for i in range(numberOfBins):
 
 # Diagonalize the Markov matriz 
 print "# Diagonalizing"
-w,v = np.linalg.eig(MarkovMatrix)
-w = w.real
-
-for i in range(w.size):
-	eigenvaluesFile.write("%10i %14.6g \n" %(i+1,w[i]))
-eigenvaluesFile.close()
+vr = np.ones(numberOfBins)
+for i in range(iterations):
+    vnew = MarkovMatrix.dot(vr)
+    if i%50==0:
+	vnew /= np.linalg.norm(vnew)
+	vr   /= np.linalg.norm(vr)
+        print "#",i, np.max(vnew-vr)
+    vr = vnew
 
 # Find the eigenvector correspondent with the largest eigenvalue and correct the sign if necesary (positive elements required)
-idx = np.argmax(w)
-vr = v[:,idx].real
 if vr[0] < 0.0:
     vr= -vr
 vr /= np.sum(vr)

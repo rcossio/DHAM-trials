@@ -1,5 +1,5 @@
 # Example run command
-# python biased-simulator.py -s samples.dat -sp sampledprob.dat -p exactprob.dat -g freeenergy.dat -k 100.0 -x0 0.0 
+# python biased-simulator.py -s samples.dat -sp sampledprob.dat -p exactprob.dat -g freenergy.dat -k 100.0 -x0 0.0 
 
 import numpy as np
 import argparse
