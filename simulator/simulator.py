@@ -29,7 +29,8 @@ Nsamples = 1000000
 
 dX = 1e-4
 X  = np.arange(-1.0,1.0+1e-10,dX)
-G  = 4*X**2 
+G = -4*(X*3)**2+(X*3)**4
+G -= np.min(G)
 P  = np.exp(-beta*G)
 P /= np.sum(P)
 
