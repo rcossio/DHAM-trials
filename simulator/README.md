@@ -7,8 +7,7 @@ python simulator.py -s samples.dat -sp sampledprob.dat -p exactprob.dat -g freee
 ```
 
 Interesting things to try are:
- | | 
---- | --- 
-Harmonic well            | G = 4*X**2
-Double symmetric well    | G = -4*(X*3)**2+(X*3)**4
-Double asymmetric well   | G = 0.8*((X*3)-4*(X*3)**2+(X*3)**4)
+* Harmonic well           ``` G = 4*X**2 ```
+* Double symmetric well   ``` G = -4*(X*3)**2+(X*3)**4 ```
+* Double asymmetric well  ``` G = 0.8*((X*3)-4*(X*3)**2+(X*3)**4)```
+
