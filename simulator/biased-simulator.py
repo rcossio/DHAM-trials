@@ -1,5 +1,5 @@
 # Example run command
-# python simulator.py -s samples.dat -sp sampledprob.dat -p exactprob.dat -g freeenergy.dat
+# python biased-simulator.py -s samples.dat -sp sampledprob.dat -p exactprob.dat -g freeenergy.dat -k 100.0 -x0 0.0 
 
 import numpy as np
 import argparse
@@ -14,12 +14,16 @@ parser.add_argument("-s" , dest="samples"           , required=True)
 parser.add_argument("-sp", dest="sampledProbability", required=True)
 parser.add_argument("-p" , dest="exactProbability"  , required=True)
 parser.add_argument("-g" , dest="freeEnergy"        , required=True)
+parser.add_argument("-k" , dest="forceConstant"     , required=True)
+parser.add_argument("-x0", dest="referenceValue"    , required=True)
 
 args = parser.parse_args()
 samplesFile            = open(args.samples,'w')
 sampledProbabilityFile = open(args.sampledProbability,'w')
 exactProbabilityFile   = open(args.exactProbability,'w')
 freeEnergyFile         = open(args.freeEnergy,'w')
+k                      = float(args.forceConstant)
+x0                     = float(args.referenceValue)
 
 #--------------------------------------------------
 T        = 310.0        #in K
@@ -29,7 +33,9 @@ Nsamples = 1000000
 
 dX = 1e-4
 X  = np.arange(-1.0,1.0+1e-10,dX)
+bias = (k/2.)*(X-x0)**2
 G = 0.8*((X*3)-4*(X*3)**2+(X*3)**4)
+G += bias
 G -= np.min(G)
 P  = np.exp(-beta*G)
 P /= np.sum(P)
