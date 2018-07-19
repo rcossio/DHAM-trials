@@ -1,5 +1,5 @@
 
-k=200.0
+k=1500.0
 xrange=$(seq -0.7 0.05 0.7)
 logfile=umbrella-sampling.log
 

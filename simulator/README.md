@@ -35,3 +35,15 @@ or proposing a vector and multiplying it iteratively to obtain the eigenvector w
 python dham-one-vector.py -i umbrella-sampling.log -m -0.7 -M 0.7 -nb 70 -T 310.0 -it 100 -g dham2.free.dat -p dham2.prob.dat
 ```
 
+Aditionally, (and orthogonally to WHAM), we can check the convergence between adjacent simulations, checking the convergente between deltaU levels with the following command.
+
+```
+python deltaU-convergence.py -T 310.0 -k 1500.0 -m -15.0 -M 15.0 -nb 40 -x0 0.0 -f0 samples.15.dat -x1 0.05 -f1 samples.16.dat > tmp.dat
+```
+where the plots of column 1 vs 7 or 2 vs 7 should be constant in some range. 
+To compare the whole possible pairs of simulations, we can run the script 
+
+```
+bash convergence.sh
+```
+

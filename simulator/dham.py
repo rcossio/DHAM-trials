@@ -78,8 +78,6 @@ for k in range(NumberOfSimulations):
 
 # Create bins and bin centers
 BinLength= (Xmax-Xmin)/float(numberOfBins)
-Xmin -= BinLength
-Xmax += BinLength
 BinCenters = Xmin+BinLength*(0.5+np.arange(numberOfBins))
 print "#    Binning Data:   Xmin=",Xmin,"   Xmax=",Xmax,"   Bin length=",BinLength 
       
