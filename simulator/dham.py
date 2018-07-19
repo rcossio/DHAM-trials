@@ -132,14 +132,16 @@ for i in range(numberOfBins):
 print "# Diagonalizing"
 w,v = np.linalg.eig(MarkovMatrix)
 w = w.real
+idx = np.argmax(w)
+vr = v[:,idx].real
+w.sort()
+w = w[::-1]
 
 for i in range(w.size):
 	eigenvaluesFile.write("%10i %14.6g \n" %(i+1,w[i]))
 eigenvaluesFile.close()
 
 # Find the eigenvector correspondent with the largest eigenvalue and correct the sign if necesary (positive elements required)
-idx = np.argmax(w)
-vr = v[:,idx].real
 if vr[0] < 0.0:
     vr= -vr
 vr /= np.sum(vr)

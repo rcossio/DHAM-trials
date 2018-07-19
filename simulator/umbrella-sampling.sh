@@ -1,6 +1,6 @@
 
-k=1500.0
-xrange=$(seq -0.7 0.05 0.7)
+k=10000.0
+xrange=$(seq -0.7 0.025 0.7)
 logfile=umbrella-sampling.log
 
 echo "#SamplesFile  ReferenceValue  ForceConstant " > $logfile
